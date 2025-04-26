@@ -1,7 +1,7 @@
-
 import React, { useState } from 'react';
 import Avatar from './Avatar';
 import ChoiceCard from './ChoiceCard';
+import { UserRound } from 'lucide-react';
 import { avatarOptions } from '../utils/avatarData';
 import { dailyChoices, sampleMatches } from '../utils/questionData';
 
@@ -9,12 +9,14 @@ type DailyChoicesProps = {
   nickname: string;
   avatarId: number;
   personality: string;
+  onViewProfile: () => void;
 };
 
 const DailyChoices: React.FC<DailyChoicesProps> = ({ 
   nickname,
   avatarId,
-  personality
+  personality,
+  onViewProfile
 }) => {
   const [todayChoice, setTodayChoice] = useState(dailyChoices[0]);
   const [hasAnswered, setHasAnswered] = useState(false);
@@ -33,9 +35,18 @@ const DailyChoices: React.FC<DailyChoicesProps> = ({
       <div className="bg-white border-b border-gray-100 px-4 py-4 sticky top-0 z-10">
         <div className="max-w-3xl mx-auto flex items-center justify-between">
           <h1 className="text-xl font-semibold">Persona Nexus</h1>
-          <div className="flex items-center">
-            <span className="text-sm font-medium mr-3">{nickname}</span>
-            <Avatar src={avatar.src} alt={nickname} size="sm" />
+          <div className="flex items-center gap-4">
+            <button
+              onClick={onViewProfile}
+              className="flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors"
+            >
+              <UserRound size={20} />
+              View Profile
+            </button>
+            <div className="flex items-center">
+              <span className="text-sm font-medium mr-3">{nickname}</span>
+              <Avatar src={avatar.src} alt={nickname} size="sm" />
+            </div>
           </div>
         </div>
       </div>

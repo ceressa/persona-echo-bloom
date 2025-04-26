@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import SplashScreen from '../components/SplashScreen';
 import WelcomeScreen from '../components/WelcomeScreen';
@@ -7,6 +6,7 @@ import QuickChoice from '../components/QuickChoice';
 import PersonalityResult from '../components/PersonalityResult';
 import MatchDiscovery from '../components/MatchDiscovery';
 import DailyChoices from '../components/DailyChoices';
+import ProfileScreen from '../components/ProfileScreen';
 
 type AppStage = 
   | 'splash'
@@ -15,7 +15,8 @@ type AppStage =
   | 'quick-choices'
   | 'personality-result'
   | 'match-discovery'
-  | 'daily-choices';
+  | 'daily-choices'
+  | 'profile';
 
 const Index = () => {
   const [stage, setStage] = useState<AppStage>('splash');
@@ -59,7 +60,14 @@ const Index = () => {
     setStage('daily-choices');
   };
 
-  // Render the appropriate screen based on the current stage
+  const handleViewProfile = () => {
+    setStage('profile');
+  };
+
+  const handleBackFromProfile = () => {
+    setStage('daily-choices');
+  };
+
   return (
     <div>
       {stage === 'splash' && <SplashScreen onComplete={handleSplashComplete} />}
@@ -90,6 +98,16 @@ const Index = () => {
           nickname={userProfile.nickname}
           avatarId={userProfile.avatarId}
           personality={userProfile.personality}
+          onViewProfile={handleViewProfile}
+        />
+      )}
+      
+      {stage === 'profile' && (
+        <ProfileScreen
+          nickname={userProfile.nickname}
+          avatarId={userProfile.avatarId}
+          personality={userProfile.personality}
+          onBack={handleBackFromProfile}
         />
       )}
     </div>
